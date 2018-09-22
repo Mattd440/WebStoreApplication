@@ -1,0 +1,12 @@
+<div class="card" style="width: 18rem;">
+  {% if item.image %}
+     <a href="{{ item.get_absolute_url }}">
+        <img class="card-img-top" src="{{ item.image.url }}" alt="Card image cap">
+     </a>
+  {% endif %}
+    <div class="card-body">
+    <h5 class="card-title">{{ item.title }}</h5>
+    <p class="card-text">{{ item.description }}</p>
+    <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>

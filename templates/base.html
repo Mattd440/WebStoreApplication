@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+      <head>
+        <!-- Required meta tags -->
+       {% include 'base/css.html' %}
+          {% block base_head %}{% endblock %}
+
+        <title>Hello, world!</title>
+      </head>
+  <body>
+  <h1> Welcome </h1>
+  {% include 'base/navbar.html' with brandname="Rocket Technology" %}
+
+   {%  block content %}
+
+   {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% include 'base/js.html' %}
+  </body>
+</html>
