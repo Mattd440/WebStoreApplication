@@ -29,6 +29,8 @@ urlpatterns = [
     re_path('^login/$', views.login_page, name='login'),
     re_path('^register/$', views.register_page, name='register'),
     re_path('^products/', include('products.urls', namespace='products')),
+    re_path('^search/' , include('search.urls', namespace='search')),
+    #re_path('^search/', include('search.urls', namespace='search'))
 ]
 
 if settings.DEBUG:

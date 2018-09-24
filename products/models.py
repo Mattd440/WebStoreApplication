@@ -4,6 +4,7 @@ import os
 from django.db.models.signals import pre_save
 from utils import unique_slug_generator
 from django.urls import reverse
+from django.db.models import Q
 
 
 def upload_image_path(instance, filename):
@@ -21,6 +22,14 @@ class ProductQuerySet(models.query.QuerySet):
 
     def active(self):
         return self.filter(active=True)
+
+    def search(self, query):
+        query_lookup = Q(title__icontains=query) \
+                       | Q(description__icontains=query) \
+                       |Q(price__icontains=query)
+
+        return self.filter(query_lookup).distinct()
+
 
 
 class ProductManager(models.Manager):
@@ -41,6 +50,8 @@ class ProductManager(models.Manager):
 
         return None
 
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
@@ -50,6 +61,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
     featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 
     objects = ProductManager()
 

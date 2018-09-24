@@ -6,15 +6,48 @@
        {% include 'base/css.html' %}
           {% block base_head %}{% endblock %}
 
-        <title>Hello, world!</title>
+        <title>Rocket Tech</title>
       </head>
   <body>
-  <h1> Welcome </h1>
-  {% include 'base/navbar.html' with brandname="Rocket Technology" %}
+  <div class="container-fluid">
 
-   {%  block content %}
+      <div class="row">
+          <div class="col-12">
+                {% include 'base/navbar.html' with brandname="Rocket Technology" logo="img/th.jpeg" %}
+          </div>
+      </div>
 
-   {% endblock %}
+      <div class="row">
+          <div class="col-11 col-md-9 ml-auto mr-auto" style="min-height:900px;">
+
+                <div class="container">
+                    {%  block content %}{% endblock %}
+                </div>
+
+          </div>
+
+          <div class="col-11 col-md-3 ml-auto mr-auto">
+              <div class="alert alert-primary">SIDE</div>
+              <aside>
+                  <h1>Side Content</h1>
+              </aside>
+          </div>
+      </div>
+
+       <div class="row">
+           <div class="col-12">
+               {% include 'base/footer.html' %}
+           </div>
+       </div>
+  </div>
+
+
+
+
+
+
+
+
 
 
 
