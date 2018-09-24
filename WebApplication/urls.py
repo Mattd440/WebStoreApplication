@@ -19,7 +19,7 @@ from . import views
 from django.conf import settings
 #from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
-
+from carts.views import cart_home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,12 +27,12 @@ urlpatterns = [
     re_path('^about/$', views.about_page, name='about'),
     re_path('^contact/$', views.contact_page, name='contact'),
     re_path('^login/$', views.login_page, name='login'),
+    re_path('^cart/$',cart_home),
     re_path('^register/$', views.register_page, name='register'),
     re_path('^products/', include('products.urls', namespace='products')),
     re_path('^search/' , include('search.urls', namespace='search')),
-    #re_path('^search/', include('search.urls', namespace='search'))
-]
 
+]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
