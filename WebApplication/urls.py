@@ -1,18 +1,4 @@
-"""WebApplication URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, re_path, include
 from . import views
@@ -20,18 +6,20 @@ from django.conf import settings
 #from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from carts.views import cart_home
-
+from accounts.views import login_page, register_page, guest_login_page
+from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('^$', views.home_page, name='home'),
     re_path('^about/$', views.about_page, name='about'),
     re_path('^contact/$', views.contact_page, name='contact'),
-    re_path('^login/$', views.login_page, name='login'),
-    re_path('^cart/$',cart_home),
-    re_path('^register/$', views.register_page, name='register'),
+    re_path('^login/$', login_page, name='login'),
+    re_path('^logout/$', LogoutView.as_view(), name='logout'),
+    re_path('^register/guest$', guest_login_page, name='guest_register'),
+    re_path('^register/$', register_page, name='register'),
     re_path('^products/', include('products.urls', namespace='products')),
     re_path('^search/' , include('search.urls', namespace='search')),
-
+    re_path('^cart/',include('carts.urls', namespace='cart')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

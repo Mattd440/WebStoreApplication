@@ -3,7 +3,7 @@
 {% block content%}
 
         <div class="row">
-            <div class="col " style="width:40%;">
+            <div class="col-12 col-md-6 " style="width:40%;">
                 {{ object.title | title }}
                 <h2> Product Added : {{ object.timestamp | timesince }} Ago </h2>
                 {{ object.description | linebreaks}}
@@ -11,6 +11,13 @@
                 {% if object.image %}
                      <img src="{{ object.image.url }}" class="img-fluid" />
                 {% endif %}
+
+            </div>
+         <div class="col-12 col-md-6 " style="width:40%;">
+
+         {% include 'products/snippets/update_cart.html' with product=product cart=cart %}
+
+
 
             </div>
         </div>

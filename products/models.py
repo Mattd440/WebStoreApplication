@@ -2,7 +2,7 @@ from django.db import models
 import random
 import os
 from django.db.models.signals import pre_save
-from utils import unique_slug_generator
+from WebApplication.utils import unique_slug_generator
 from django.urls import reverse
 from django.db.models import Q
 
@@ -27,7 +27,7 @@ class ProductQuerySet(models.query.QuerySet):
         query_lookup = Q(title__icontains=query) \
                        | Q(description__icontains=query) \
                        | Q(price__icontains=query) \
-                       | Q(producttag__icontains=query)
+                       | Q(producttag__title__icontains=query)
 
         return self.filter(query_lookup).distinct()
 
