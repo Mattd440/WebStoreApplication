@@ -4,6 +4,9 @@
         {% if next %}
         <input type="hidden" name="next" value="{{ next_url }}" />
         {% endif %}
-        {{ form }}
+            {% if address_type %}
+                <input type="hidden" name="address_type" value="{{ address_type }}">
+            {% endif %}
+        {{ form.as_p }}
         <input type="submit" class="btn btn-primary" value="Submit">
     </form>

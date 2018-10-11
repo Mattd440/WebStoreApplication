@@ -22,9 +22,9 @@ def guest_login_page(request):
         if is_safe_url(next_post, request.get_host()):
             return redirect(redirect_path)
         else:
-            redirect('/')
+            redirect('/register/')
 
-    return render(request, 'carts/checkout.html', {'form':form})
+    return redirect('/cart/checkout' ,{'form':None})
 
 def register_page(request):
     form = RegisterForm(request.POST or None)

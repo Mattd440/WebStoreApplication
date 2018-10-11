@@ -5,26 +5,44 @@ import math
 # Create your models here.
 from WebApplication.utils import unique_order_id_generator
 from django.db.models.signals import pre_save, post_save
+from addresses.models import Address
+
 ORDER_STATUS = (
     ('created', 'Created'),
     ('paid', 'Paid'),
     ('shipped', 'Shipped'),
     ('refunded', 'Refunded')
 )
+class OrderManager(models.Manager):
+    def new_or_get(self, billing_profile, cart):
+        created = False
+        query = self.get_queryset().filter(
+            billing_profile=billing_profile,
+            cart=cart, active=True, status='created')
+
+        if query.count() == 1:
+            order = query.first()
+        else:
+            order = self.model.objects.create(
+                billing_profile=billing_profile,
+                cart=cart)
+            created = True
+        return order, created
 
 
 class Order(models.Model):
-    billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, null=True, blank=True)
-    order_id = models.CharField(default='abc', blank=True, max_length=120)
-    cart =models.ForeignKey(Cart, on_delete=models.CASCADE)
-    status = models.CharField(max_length=120, default='created')
-    total = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
-    shipping_total = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
-    active = models.BooleanField(default=True)
-
+    billing_profile     = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, null=True, blank=True)
+    order_id            = models.CharField(blank=True, max_length=20)
+    cart                = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    status              = models.CharField(max_length=120, default='created')
+    total               = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
+    shipping_total      = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
+    active              = models.BooleanField(default=True)
+    shipping_address    = models.ForeignKey(Address, related_name='shipping_address', null=True, blank=True,on_delete=models.DO_NOTHING)
+    billing_address     = models.ForeignKey(Address, related_name='billing_address',null=True, blank=True, on_delete=models.DO_NOTHING)
     #billing_profile
-    #shipping_address
-    #billing_address
+
+    objects = OrderManager()
 
     def __str__(self):
         return self.order_id
@@ -36,12 +54,33 @@ class Order(models.Model):
         format_total = format(new_total, '.2f')
         self.total = format_total
         self.save()
+
         return new_total
+
+    def checkout_done(self):
+        billing_profile = self.billing_profile
+        shipping_address = self.shipping_address
+        billing_address = self.billing_address
+        total = self.total
+
+        if billing_profile and shipping_address and billing_address and total > 0:
+            return True
+
+        return False
+
+    def mark_paid(self):
+        if self.checkout_done():
+            self.status = 'paid'
+            self.save()
+        return self.status
+
 
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
-
+    query = Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
+    if query.exists():
+        query.update(active=False)
 pre_save.connect(pre_save_create_order_id, sender=Order)
 
 def post_save_cart_total(sender, instance,created, *args, **kwargs):
