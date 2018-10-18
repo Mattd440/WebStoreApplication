@@ -9,10 +9,21 @@ from addresses.forms import AddressForm
 from addresses.models import Address
 from django.http import JsonResponse
 
+def cart_detail_api_view(request):
+    cart, newcart = Cart.objects.new_or_get(request)
+
+    productData = [{
+        "id":product.id,
+        "url":product.get_absolute_url(),
+        'name':product.title,
+        'price':product.price
+        } for product in cart.products.all()]
+    cart = {'products':productData, 'subtotal':cart.subtotal, 'total':cart.total}
+    return JsonResponse(cart)
+
 
 def cart_home(request):
     cart, newcart = Cart.objects.new_or_get(request)
-    print(cart.products)
     return render(request, 'carts/home.html', {'cart': cart})
 
 def cart_update(request):
@@ -60,6 +71,7 @@ def checkout(request):
     shipping_address_id = request.session.get('shipping_address_id', None)
 
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
+    print("profile {}".format(billing_profile))
     address_query = None
     if billing_profile is not None:
         if request.user.is_authenticated:

@@ -8,5 +8,6 @@
         <h5 class="card-title">{{ item.title| upper }}</h5>
         <p class="card-text">{{ item.description | linebreaks | truncatewords:15 }}</p>
         <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Go somewhere</a>
+        {% include 'products/snippets/update_cart.html' with product=item cart=cart %}
     </div>
 </div>

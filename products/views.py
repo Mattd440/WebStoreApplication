@@ -3,7 +3,8 @@ from django.views.generic import ListView, DetailView
 from .models import Product
 from django.http import Http404
 from carts.models import Cart
-
+from analytics.signals import object_viewed_signal
+from analytics.mixins import ObjectViewMixin
 # Create your views here.
 #
 #
@@ -47,7 +48,8 @@ from carts.models import Cart
 #
 #     return render(request, 'products/detail.html', context)
 
-class ProductDetailView(DetailView):
+class ProductDetailView(ObjectViewMixin,DetailView):
+    model=Product
     queryset = Product.objects.all()
     template_name = 'products/detail.html'
 
@@ -67,12 +69,15 @@ class ProductDetailView(DetailView):
             raise Http404("Product Not Found")
         except Product.MultipleObjectsReturned:
             query = Product.objects.filter(slug=slug, active=True)
-            return query.first()
+            product= query.first()
+        except:
+            raise Http404("Cannot Find Product")
 
+        #object_viewed_signal.send(product.__class__, instance=product, request=request)
         return product
 
 
-class ProductListView(ListView):
+class ProductListView( ListView):
     template_name = 'products/list.html'
 
     def get_queryset(self):
@@ -81,11 +86,13 @@ class ProductListView(ListView):
 
     def get_context_data(self, *args ,**kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
+        cart, new_cart = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart
         return context
 
 
 #
-# class ProductFeaturedListView(ListView):
+# class ProductFeaturedListView(ObjectViewedMixin, ListView):
 #     template_name = "products/list.html"
 #
 #     def get_queryset(self):

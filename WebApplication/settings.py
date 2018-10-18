@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_ENDSESSION = False
+
 
 # Application definition
 
@@ -45,8 +48,11 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'addresses',
-    'storages'
+    'storages',
+    'analytics'
 ]
+
+#AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

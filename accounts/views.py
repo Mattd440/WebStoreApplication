@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 from .forms import RegisterForm, LoginForm, GuestForm
 from .models import  GuestEmail
 from django.utils.http import is_safe_url
-
+from .signals import user_logged_in
 # Create your views here.
 User = get_user_model()
 
@@ -51,9 +51,10 @@ def login_page(request):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
-
+            user_logged_in.send(user.__class__, request=request, instance=user)
             try:
                 del request.session['guest_email_id']
             except:
@@ -65,7 +66,7 @@ def login_page(request):
                 redirect('/')
         else:
             # Return an 'invalid login' error message.
-            print("error")
+            print("error cannot login")
 
         print(form.cleaned_data)
     return render(request, 'accounts/login.html', {'form':form})

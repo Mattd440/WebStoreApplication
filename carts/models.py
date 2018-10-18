@@ -31,7 +31,7 @@ class CartManager(models.Manager):
         return self.model.objects.create(user=current_user)
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
     products = models.ManyToManyField(Product, blank=True)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)

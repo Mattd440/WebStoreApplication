@@ -1,3 +1,4 @@
+{% load static %}
 <script   src="https://code.jquery.com/jquery-3.3.1.min.js"
           integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
           crossorigin="anonymous">
@@ -11,59 +12,12 @@
         crossorigin="anonymous">
 </script>
 
-<script type="text/javascript">
-   $(document).ready(()=> {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
-       var productAddForm = $(".product-add-form")
-       productAddForm.submit(function (event) {
-           event.preventDefault()
-           let form = $(this)
-           let endPoint = form.attr("data-endpoint")
-           let method = form.attr("method")
-           let formData = form.serialize()
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.88/jsrender.min.js"></script>
 
-           $.ajax({
-               url: endPoint,
-               method:method,
-               data:formData,
-
-               success: function(data){
-                   console.log('success')
-                   console.log(data)
-                   var submitSpan = form.find('.submit-span')
-                   if (data.added){
-                       submitSpan.html("In Cart <button type='submit' class=\"btn btn-danger\">Remove?</button>")
-                   }else{
-                       submitSpan.html("<button type='submit' class=\"btn btn-success\">Add To Cart</button>")
-                   }
-                   var count = $('.navbar-cart-count')
-                   count.text(data.count)
-
-                   var path = window.location.href
-
-                   if(path.indexOf('cart') != -1){
-                       updateCart()
-                   }
-               },
-               error:function(err){
-                   console.log("error")
-                   console.log(err)
-               }
-           })
-
-       })
-
-       function updateCart(){
-            var cartTable =$(".cart-table")
-            var cartBody = cartTable.find(".cart-body")
-            cartBody.html('<h1>Changed</h1>')
-
-           var updateCartUrl
-
-       }
-
-
-
-   });
-
-</script>
+<script src="{% static 'js/application.js' %}"></script>
+<script src="{% static 'js/csrf.ajax.js' %}"></script>
+<script src="{% static 'js/billing.js' %}"></script>
+{% include 'base/js_templates.html' %}

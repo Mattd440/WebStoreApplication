@@ -1,0 +1,72 @@
+[
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Pants",
+        "slug": "pants",
+        "description": "These are pants",
+        "price": "39.99",
+        "image": "media/th92930813.jpeg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-09-22T04:35:57.096Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "stuff",
+        "slug": "stuff",
+        "description": "some stuff",
+        "price": "39.99",
+        "image": "media/th94147217.jpeg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-09-22T04:35:57.096Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "car",
+        "slug": "car",
+        "description": "car car car",
+        "price": "59.99",
+        "image": "media/th60518507.jpeg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-09-22T04:35:57.096Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "food",
+        "slug": "food-t33c",
+        "description": "some food",
+        "price": "33.23",
+        "image": "media/th17967397.jpeg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-09-22T04:35:57.096Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "title": "prod1",
+        "slug": "abc32",
+        "description": "prod",
+        "price": "39.99",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-10-05T02:32:46.459Z"
+    }
+}
+]
