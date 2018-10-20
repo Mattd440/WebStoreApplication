@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
+STRIPE_SECRET_KEY= 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH'
+STRIPE_PUB_KEY = 'pk_test_jYfpu2phpCy3WSBomeU4MKaj'
+
 
 # Application definition
 

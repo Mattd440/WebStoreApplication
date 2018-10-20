@@ -6,6 +6,7 @@ from django.utils.http import is_safe_url
 from .signals import user_logged_in
 # Create your views here.
 User = get_user_model()
+from django.urls import reverse
 
 def guest_login_page(request):
     form = GuestForm(request.POST or None)
@@ -63,7 +64,7 @@ def login_page(request):
             if is_safe_url(next_post, request.get_host()):
                 return redirect(redirect_path)
             else:
-                redirect('/')
+                return redirect('home')
         else:
             # Return an 'invalid login' error message.
             print("error cannot login")

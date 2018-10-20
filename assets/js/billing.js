@@ -197,22 +197,54 @@ card.addEventListener('change', function(event) {
 });
 
 // Handle form submission
-var form = document.getElementById('payment-form');
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
+var form = $('#payment-form');
+var loadBtn = form.find('.btn-load')
+var loadBtnHtml = loadBtn.html()
+var loadBtnClasses = loadBtn.attr('class')
+
+form.on('submit', function(event){
+    event.preventDefault();
+    var $this = $(this)
+
+    loadBtn.blur()
+    var timeLoad = 1500
+    var currentTimeout;
+    var errHtml = "<i class='fa fa-warning'></i> An error occured"
+    var loadingHtml = "<i class=' fa fa-spin fa-spinner'></i> Loading..."
+
+    var errorBtnClass = "btn btn-danger disabled my-3"
+    var loadingBtnClass = "btn btn-success disabled my-3"
 
   stripe.createToken(card).then(function(result) {
     if (result.error) {
       // Inform the user if there was an error
-      var errorElement = document.getElementById('card-errors');
+      var errorElement = $('#card-errors');
       errorElement.textContent = result.error.message;
+      currentTimeout = statusBtnShow(loadBtn, errHtml, errorBtnClass, 1000, currentTimeout)
     } else {
       // Send the token to your server
+      currentTimeout = statusBtnShow(loadBtn, loadingHtml, loadingBtnClass, 2000, currentTimeout)
       stripeTokenHandler(nextUrl, result.token);
     }
   });
 });
 
+function statusBtnShow(element, Html, Classes, timeLoad, timeout){
+
+    if(!timeLoad){
+        timeLoad = 1500
+    }
+    var defaultHtml = element.html()
+    var defaultClass = element.attr('class')
+    element.html(Html)
+    element.removeClass(defaultClass)
+    element.addClass(Classes)
+    return setTimeout(function(){
+        element.html(Html)
+        element.addClass(defaultHtml)
+        element.removeClass(Classes)
+    }, timeLoad)
+}
 
 function redirectToNext(nextPath, timeoffset) {
     // body...
@@ -244,11 +276,16 @@ function stripeTokenHandler(nextUrl, token){
             } else {
                 alert(succesMsg)
             }
+
+            loadBtn.html(loadBtnHtml)
+            loadBtn.attr('class', loadBtnClasses)
             redirectToNext(nextUrl, 1500)
 
         },
         error: function(error){
-            console.log(error)
+            $.alert({title: "An error occured", content: "Please try adding your card again"})
+            loadBtn.html(loadBtnHtml)
+            loadBtn.attr('class', loadBtnClasses)
         }
     })
 }
