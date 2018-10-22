@@ -30,6 +30,11 @@ ALLOWED_HOSTS = []
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
+MAILCHIMP_API_KEY = "035a1d0a09ffdadc34fec9bc7efa1ba7-us19"
+MAILCHIMP_DATA_CENTER = "us19"
+MAILCHIMP_EMAIL_LIST_ID = "44816e299c"
+
+
 STRIPE_SECRET_KEY= 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH'
 STRIPE_PUB_KEY = 'pk_test_jYfpu2phpCy3WSBomeU4MKaj'
 
@@ -52,10 +57,11 @@ INSTALLED_APPS = [
     'billing',
     'addresses',
     'storages',
-    'analytics'
+    'analytics',
+    'mailing'
 ]
 
-#AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
