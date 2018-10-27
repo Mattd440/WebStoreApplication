@@ -5,5 +5,53 @@
 {% endblock %}
 
 {% block content %}
-    <h1> Home Page</h1>
+
+<div class="homecard card">
+        <div class="row no-gutters">
+            <div class="col-auto">
+                <img style="width:450px; height: 300px" src="{% static 'img/toledo.jpg' %}" class="img-fluid ml-auto mr-auto" alt="">
+            </div>
+            <div class="homecardtext col">
+                <div class="card-block px-2">
+                    <h2 class="card-title">About Rocket Technology</h2>
+                    <p class="card-text">DESCRIPTION</p>
+
+                </div>
+            </div>
+        </div>
+
+  </div>
+
+    <div class="homecard card">
+        <div class="row no-gutters">
+
+            <div class=" homecardtext col">
+                <div class="card-block px-2">
+                    <h2 class="card-title">Unmatched Service</h2>
+                    <p class="card-text">Description</p>
+
+                </div>
+            </div>
+            <div class="col-auto">
+                <img style="width:450px; height: 300px" src="{% static 'img/salesman.jpeg' %}" class="img-fluid" alt="">
+            </div>
+        </div>
+
+  </div>
+
+    <div class="homecard card">
+        <div class="row no-gutters">
+            <div class="col-auto">
+                <img style="width:450px; height: 300px" src="{% static 'img/services2.jpeg' %}" class="img-fluid" alt="">
+            </div>
+            <div class=" homecardtext col">
+                <div class="card-block px-2">
+                    <h2 class="card-title">Repairs And Services</h2>
+                    <p class="card-text">Description</p>
+
+                </div>
+            </div>
+        </div>
+
+  </div>
 {% endblock %}

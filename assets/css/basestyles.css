@@ -1,3 +1,13 @@
-h1{
-    color:red;
+.wrapper{
+    margin: 0;
+    background: #5b80b2;
+}
+.page_wrapper{
+    margin:0;
+    background: #5b80b2;
+}
+body{
+    margin: 0;
+    background-color: blue;
+
 }

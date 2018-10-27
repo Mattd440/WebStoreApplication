@@ -99,7 +99,7 @@ from django.db.models.signals import post_save, pre_save
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from accounts.models import GuestEmail
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 import stripe

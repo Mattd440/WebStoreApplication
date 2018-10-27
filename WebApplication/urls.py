@@ -10,7 +10,7 @@ from accounts.views import login_page, register_page, guest_login_page
 from django.contrib.auth.views import LogoutView
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from billing.views import payment_method_view, payment_method_createview
-
+from mailing.views import MarketingPreferenceUpdateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('^$', views.home_page, name='home'),
@@ -27,7 +27,9 @@ urlpatterns = [
     re_path('^api/cart/$', cart_detail_api_view, name='api-cart'),
     re_path('^cart/',include('carts.urls', namespace='cart')),
     re_path('^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
-    re_path('^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint')
+    re_path('^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
+    re_path('^settings/email/$', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

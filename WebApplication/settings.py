@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,6 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'erv&r3o*ig57rp!ys*4_lrhk-=_bn^+as(xb##5rb=u+jk^!%g'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mmdiederick@gmail.com'
+EMAIL_HOST_PASSWORD = 'Mmd44035'
+EMAIL_PORT = 587
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -30,7 +38,7 @@ ALLOWED_HOSTS = []
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
-MAILCHIMP_API_KEY = "035a1d0a09ffdadc34fec9bc7efa1ba7-us19"
+MAILCHIMP_API_KEY = "c37242c9db83f1a7705a6e6dd6193952-us19"
 MAILCHIMP_DATA_CENTER = "us19"
 MAILCHIMP_EMAIL_LIST_ID = "44816e299c"
 
@@ -61,7 +69,7 @@ INSTALLED_APPS = [
     'mailing'
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
+#AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

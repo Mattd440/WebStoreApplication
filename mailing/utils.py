@@ -1,8 +1,8 @@
+import hashlib
+import json
+import re
 import requests
 from django.conf import settings
-import json
-import hashlib
-import re
 
 MAILCHIMP_API_KEY = getattr(settings, "MAILCHIMP_API_KEY", None)
 MAILCHIMP_DATA_CENTER = getattr(settings, "MAILCHIMP_DATA_CENTER", None)
@@ -51,7 +51,7 @@ class Mailchimp(object):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + "/" + hashed_email
         r = requests.get(endpoint, auth=("", self.key))
-        return r.status_code , r.json()
+        return r.status_code, r.json()
 
     def check_valid_status(self, status):
         choices = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
