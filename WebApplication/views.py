@@ -9,8 +9,8 @@ def home_page(request):
     print(featured)
     return render(request, 'home_page.html',{'featured_prods':featured})
 
-def about_page(request):
-    return render(request, 'home_page.html')
+def service_page(request):
+    return render(request, 'services.html')
 
 def contact_page(request):
     contact_form = ContactForm(request.POST or None)

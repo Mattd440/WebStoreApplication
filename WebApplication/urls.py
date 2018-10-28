@@ -10,11 +10,12 @@ from accounts.views import login_page, register_page, guest_login_page
 from django.contrib.auth.views import LogoutView
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from billing.views import payment_method_view, payment_method_createview
-from mailing.views import MarketingPreferenceUpdateView
+from mailing.views import MailingPreferenceUpdateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('^$', views.home_page, name='home'),
-    re_path('^about/$', views.about_page, name='about'),
+    re_path('^services/$', views.service_page, name='services'),
     re_path('^contact/$', views.contact_page, name='contact'),
     re_path('^login/$', login_page, name='login'),
     re_path('^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
@@ -28,7 +29,7 @@ urlpatterns = [
     re_path('^cart/',include('carts.urls', namespace='cart')),
     re_path('^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     re_path('^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
-    re_path('^settings/email/$', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
+    re_path('^settings/email/$', MailingPreferenceUpdateView.as_view(), name='settings'),
 
 ]
 if settings.DEBUG:

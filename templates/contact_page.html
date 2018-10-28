@@ -1,15 +1,73 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Contact</h1>
-    <div class="row">
-        <div class="col-12 col-md-6 mx-auto">
-            <p>{{ content }}</p>
+
+    <div class="row mx-auto" style="margin-bottom:20px;">
+        <div class="col-12 col-md-5 offset-md-2">
+            <h4>Contact Info</h4>
+                <ul>
+                    <li><strong>Email:</strong> rockettechnology@gmail.com</li>
+                    <li><strong>Address:</strong> 2222 Monroe St, Toledo, OH 43604 </li>
+                    <li><strong> Phone: </strong> (419) 241-7777</li>
+                </ul>
+
+        </div>
+
+        <div class="col-12 col-md-5">
+            <h4>Hours Of Operation</h4>
+            <table class="c-location-hours-details ">
+                <thead class="sr-only"><tr><th>Day of the Week</th><th>Hours</th></tr></thead>
+                <tbody><tr class="c-location-hours-details-row js-day-of-week-row highlight-text is-today js-is-today" data-day-of-week-start-index="5" data-day-of-week-end-index="5" itemprop="openingHours" content="Sa 09:00-21:00">
+                    <td class="c-location-hours-details-row-day">Sat</td>
+                    <td class="c-location-hours-details-row-intervals">
+                        <span class="c-location-hours-details-row-intervals-instance ">
+                            <span class="c-location-hours-details-row-intervals-instance-open">9:00 AM</span>
+                            <span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span>
+                            <span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span>
+                    </td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="6" data-day-of-week-end-index="6" itemprop="openingHours" content="Su 11:00-18:00">
+                    <td class="c-location-hours-details-row-day">Sun</td><td class="c-location-hours-details-row-intervals"><span class="c-location-hours-details-row-intervals-instance ">
+                    <span class="c-location-hours-details-row-intervals-instance-open">11:00 AM</span><span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span><span class="c-location-hours-details-row-intervals-instance-close">6:00 PM</span>
+                </span></td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="0" data-day-of-week-end-index="0" itemprop="openingHours" content="Mo 08:00-21:00"><td class="c-location-hours-details-row-day">Mon</td><td class="c-location-hours-details-row-intervals">
+                    <span class="c-location-hours-details-row-intervals-instance "><span class="c-location-hours-details-row-intervals-instance-open">8:00 AM</span><span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span><span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span></td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="1" data-day-of-week-end-index="1" itemprop="openingHours" content="Tu 08:00-21:00"><td class="c-location-hours-details-row-day">Tue</td><td class="c-location-hours-details-row-intervals"><span class="c-location-hours-details-row-intervals-instance ">
+                    <span class="c-location-hours-details-row-intervals-instance-open">8:00 AM</span>
+                    <span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span>
+                    <span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span></td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="2" data-day-of-week-end-index="2" itemprop="openingHours" content="We 08:00-21:00"><td class="c-location-hours-details-row-day">Wed</td><td class="c-location-hours-details-row-intervals"><span class="c-location-hours-details-row-intervals-instance "><span class="c-location-hours-details-row-intervals-instance-open">8:00 AM</span><span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span><span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span></td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="3" data-day-of-week-end-index="3" itemprop="openingHours" content="Th 08:00-21:00"><td class="c-location-hours-details-row-day">Thu</td><td class="c-location-hours-details-row-intervals"><span class="c-location-hours-details-row-intervals-instance "><span class="c-location-hours-details-row-intervals-instance-open">8:00 AM</span><span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span><span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span></td></tr><tr class="c-location-hours-details-row js-day-of-week-row highlight-text " data-day-of-week-start-index="4" data-day-of-week-end-index="4" itemprop="openingHours" content="Fr 08:00-21:00"><td class="c-location-hours-details-row-day">Fri</td><td class="c-location-hours-details-row-intervals"><span class="c-location-hours-details-row-intervals-instance "><span class="c-location-hours-details-row-intervals-instance-open">8:00 AM</span><span class="c-location-hours-details-row-intervals-instance-separator" aria-label="To"> - </span><span class="c-location-hours-details-row-intervals-instance-close">9:00 PM</span></span></td></tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-12" style="width:70%;">
+            <p>
+                <h3>
+                    Contact Us at any time with product questions or concerns or to
+                    schedule an appointment for service.
+                </h3>
+            </p>
             <form class='contact-form' method="post" action="{% url 'contact' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <input  style="width:100%;"type="submit" class="btn btn-primary" value="Submit">
             </form>
+
         </div>
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}

@@ -2,24 +2,21 @@
 
 {% block content%}
 
-        <div class="row">
-            <div class="col-12 col-md-6 " style="width:40%;">
-                {{ object.title | title }}
-                <h2> Product Added : {{ object.timestamp | timesince }} Ago </h2>
-                {{ object.description | linebreaks}}
+        <div class=" detaildata row col-12">
+            <div style=" margin-bottom:30px; width:100%;">
+               <h2> {{ object.title | title }} </h2>
+                <h3>${{ object.price | title }}</h3>
+
+                <p>{{ object.description1 | linebreaks}} </p>
+                 <p>{{ object.description2 | linebreaks}}</p>
 
                 {% if object.image %}
-                     <img src="{{ object.image.url }}" class="img-fluid" />
+                     <img src="{{ object.image.url }}" class="img-fluid" style="width:350px; height:250px; margin:15px;" />
                 {% endif %}
-
+            <br>
+                {% include 'products/snippets/update_cart.html' with product=product cart=cart %}
             </div>
-         <div class="col-12 col-md-6 " style="width:40%;">
 
-         {% include 'products/snippets/update_cart.html' with product=product cart=cart %}
-
-
-
-            </div>
         </div>
 
 

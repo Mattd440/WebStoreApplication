@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base_head %}
+<link rel="stylesheet" href="{% static 'css/basestyles.css' %}">
+{#<link rel="stylesheet" href="{% static 'css/services.css' %}">#}
+
+{% endblock %}
+
+{% block content %}
+    <div class="servicewrapper container-fluid">
+         <div class="row">
+       <div  class="servicecard card col-10 col-md-4 offset-md-2 mx-auto" style="border:0px">
+          <img class="card-img-top" src="{% static 'img/pc1.png' %}" alt="Card image cap">
+          <div class="card-body" style="background-color: #003366">
+            <p class="card-text" style="color:azure; font-size: 18px; padding:8px;">
+                If your computer is running slow or you need help getting things up and running, give us a call!
+            </p>
+          </div>
+       </div>
+
+        <div class="servicecard card col-10 col-md-4 mx-auto" style="border:0px">
+          <img class="card-img-top" src="{% static 'img/mac1.png' %}" alt="Card image cap">
+          <div class="card-body" style="background-color: #003366">
+            <p class="card-text" style="color:azure; font-size: 18px; padding:8px;">
+                Yes, we service Macs too. Is your Mac computer running slow, or pestered with popups? Let us clean it up and get you up and running again.
+            </p>
+          </div>
+        </div>
+   </div>
+   <div class="row" style="margin-bottom: 12px;">
+        <div class="servicecard card col-10 col-md-4 offset-md-2 mx-auto mt-4" style="border:0px">
+          <img class="card-img-top" src="{% static 'img/virus.png' %}" alt="Card image cap">
+          <div class="card-body" style="background-color: #003366">
+            <p class="card-text" style="color:azure; font-size: 18px; padding:8px;">
+                Malware is a big threat to personal information stored on your computer as well as your online accounts. Talk to us about how we can keep you protected.
+            </p>
+          </div>
+        </div>
+
+        <div class="servicecard card col-10 col-md-4 mx-auto mt-4 " style="border:0px">
+          <img class="card-img-top" src="{% static 'img/network.png' %}" alt="Card image cap">
+          <div class="card-body" style="background-color: #003366">
+            <p class="card-text" style="color:azure; font-size: 18px; padding:8px;">
+                We can fix your WiFi performance and coverage issues so you can enjoy a good connection wherever you are.
+            </p>
+          </div>
+        </div>
+
+   </div>
+    <div class="row">
+        <div class="col-10 offset-sm-1 col-md-8 offset-md-2">
+             <h1 style="color: #003366">What We Offer</h1> <hr>
+            <ol class="mx-auto" style="list-style: disc">
+                <li>30 Day Guarantee - Our work is guaranteed for 30 days. If we can’t fix it, it’s free.</li>
+                <li>Any Operating System - We work on Windows, Mac, Linux and Unix systems.</li>
+                <li>Free Estimates - Bring your computer in, we'll diagnose the problem and give you our expert opinion for free.</li>
+                <li> Certified Technicians - Our technicians are A+, Network +, Microsoft, and manufacturer certified.</li>
+            </ol>
+        </div>
+
+    </div>
+    </div>
+
+
+{% endblock %}

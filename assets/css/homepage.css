@@ -18,7 +18,7 @@
 }
 
 body{
-    background-color: darkblue;
+    /*background-color: darkblue;*/
     min-height: 1500px;
     height:100%;
 }
@@ -32,20 +32,14 @@ body{
     height:60px;
     padding:6px;
     vertical-align: middle;
-    margin-top:10px;
-    z-index: -1;
+    margin-top:40px;
 }
-.homecard{
-    margin: 15px;
-    border:2px solid yellow;
+.content-wrapper{
+    margin-top:25px;
+    margin-bottom: 25px;
+    padding:12px;
 }
-.homecardtext{
-    background-color: firebrick;
-    padding:25px;
-}
-.side-card{
-    height:350px;
-}
-aside{
-    margin-top: 15px;
-}
+ .featurette{
+     margin-top:12px;
+     padding:12px;
+ }

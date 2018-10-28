@@ -1,4 +1,4 @@
- <form class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
+ <form style="display:inline"  class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
     {% csrf_token %}
 
     <input type="hidden" name="product" value="{{ product.id }}">
@@ -6,9 +6,9 @@
 
         <span class="submit-span">
             {% if object in cart.products.all %}
-                 In Cart <button type='submit' class="btn btn-danger">Remove?</button>
+                 In Cart <button style="width:100%;margin-top:7px;" type='submit' class="btn btn-danger">Remove?</button>
             {% else %}
-                 <button type='submit' class="btn btn-success">Add To Cart</button>
+                 <button style="width:100%;margin-top:7px;" type='submit' class="btn btn-success btn-block">Add To Cart</button>
             {% endif %}
         </span>
 

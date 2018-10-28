@@ -1,13 +1,15 @@
-<div class="card" style="margin-top: 20px">
+<div class="card" style="margin-top: 20px;">
   {% if item.image %}
      <a href="{{ item.get_absolute_url }}">
-        <img class="card-img-top" style="height:250px;" src="{{ item.image.url }}" alt="Card image cap">
+        <img class="card-img-top" style="height:250px;width:300px ; margin-left:35px; margin-top:12px;" src="{{ item.image.url }}" alt="Card image cap">
      </a>
   {% endif %}
     <div class="card-body">
-        <h5 class="card-title">{{ item.title| upper }}</h5>
-        <p class="card-text">{{ item.description | linebreaks | truncatewords:15 }}</p>
-        <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Go somewhere</a>
-        {% include 'products/snippets/update_cart.html' with product=item cart=cart %}
+        <h2 style="text-align: center; "class="card-title">{{ item.title| upper }}</h2>
+        <p class="card-text">{{ item.description1 | linebreaks |truncatewords:20 }}</p>
+        <a style="width:100%" href="{{ item.get_absolute_url }}" class="btn btn-primary">Find Out More</a>
+        <div style="width:100%;margin-top:7px;">
+            {% include 'products/snippets/update_cart.html' with product=item cart=cart %}
+        </div>
     </div>
 </div>

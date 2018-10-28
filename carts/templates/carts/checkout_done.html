@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-    <div class="col-6 mx-auto py-5 text-center">
-        <h1 class="display-1">Thank you for Your Order</h1>
-        <h3>Please Shop With Us Again</h3>
+    <div style="background-image: url({% static 'img/thankyou.jpeg'%});
+         width:100%; height:1000px; background-repeat: no-repeat; background-size: cover ">
+
     </div>
+{#    <div class="col-6 mx-auto py-5 text-center">#}
+{#        <h1 class="display-1">Thank you for Your Order</h1>#}
+{#        <h3>Please Shop With Us Again</h3>#}
+{#    </div>#}
 {% endblock %}

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% url 'products:list' as product_url %}
 <!doctype html>
 <html lang="en">
       <head>
@@ -12,13 +12,19 @@
   <body>
   <div class="wrapper container-fluid">
 
+
+  <!-- Add Navbar -->
+
       <div class="row">
           <div class="col-12">
                 {% include 'base/navbar.html' with brandname="Rocket Technology" logo="img/rocket.png" %}
           </div>
       </div>
 
-      <div class="carousel-wrapper row">
+
+ <!-- Image Carousel -->
+
+      <div class="carousel-wrapper" style="margin-top: 30px;">
           <div class=" col-12">
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
@@ -57,47 +63,81 @@
 
           </div>
       </div>
-  <div class="row">
-      <div class="col-12 col-md-9">
-         {%  block content %}{% endblock %}
-      </div>
+
+  <hr class="featurette-divider" >
 
 
-      <div class="col-11 col-md-3 ml-auto mr-auto">
+      <div class="container marketing">
 
-          <div class="alert alert-primary">
-              <h3>Featured Products</h3>
+        <!-- Three columns of text below the carousel -->
+
+
+        <div class="row">
+
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="{% static 'img/laptopgif.jpeg' %}" alt="Generic placeholder image" width="180" height="180"; style="margin:20px">
+            <h2 style="margin: 12px"><strong>Laptops</strong></h2>
+            <p>
+                Anyone, from college students to small business owners,
+                can benefit from finding an excellent deal on computer
+                hardware. Taking the time to find a bargain on laptops is
+                well worth the effort since notebooks provide the convenience of
+                portable performance. Any computer's primary indicator of overall
+                performance is usually processor speed, which affects how quickly
+                the system can carry out various tasks
+            </p>
+            <p>
+                <a style="width:100%;" class="btn btn-primary btn-block" href="{{ product_url }}" role="button">View More »</a>
+            </p>
           </div>
-                <aside>
 
-                    {% if featured_prods %}
-                    {% for prod in featured_prods %}
-                        <div class=" side-card card">
-                            {% if prod.image %}
-                                <a href="{{ prod.get_absolute_url }}">
-                                <img class="card-img-top" style="height:250px;" src="{{ prod.image.url }}" alt="Card image cap">
-                                </a>
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ prod.title| upper }}</h5>
-                                <h5>${{ prod.price | upper }}</h5>
-                                <p class="card-text">{{ item.description | linebreaks | truncatewords:15 }}</p>
-                            </div>
-                        </div>
 
-                        <br>
-                    {% endfor %}
-                        {% else %}
-                        <p>
-                        No Featured Items
-                        </p>
-                    {% endif %}
-                </aside>
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="{% static 'img/tabletgif.jpeg' %}" alt="Generic placeholder image" width="180" height="180" style="margin:20px">
+            <h2 style="margin: 12px"><strong>Tablets</strong></h2>
+            <p>
+                The many tablets for sale in today's market combine the
+                functionality of a desktop computer with the convenience of a
+                mobile device. With wireless Internet capabilities and touch-screen
+                technology, these devices let users quickly complete work tasks,
+                organize photos, communicate through email or chat and even play games,
+                all while on the go. Professionals can also meet with clients and present
+                information while away from the office
+            </p>
+            <p>
+                <a style="width:100%;" class="btn btn-primary btn-block" href="{{ product_url }}" role="button">View More »</a>
+            </p>
+          </div>
+
+
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="{% static 'img/printergif.jpeg' %}" alt="Generic placeholder image" width="180" height="180" style="margin:20px">
+            <h2 style="margin: 12px"><strong>Printers</strong></h2>
+            <p>
+                Modern printers combine functionality and efficiency at home and in the office.
+                They come in a variety of configurations including inkjet and laser models in
+                both monotone and color options. Some easily fit on a desktop and are light enough
+                to move, while others require a designated workstation. You will find a large selection of printers from the
+                best brands, including HP, Epson, Brother and Canon printers.
+            </p>
+            <p>
+                <a style="width:100%;" class="btn btn-primary btn-block" href="{{ product_url }}" role="button">View More »</a>
+            </p>
+          </div>
+
+        </div>
+
       </div>
-  </div>
 
+          <!-- Insert Page COntent -->
 
+          <div class="content-wrapper row">
+              <div class="col-12">
+                  {% block content %} {% endblock %}
+              </div>
+          </div>
 
+<hr class="featurette-divider">
 
 
 
@@ -115,4 +155,5 @@
   {% endblock %}
   </body>
 </html>
+
 

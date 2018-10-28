@@ -1,15 +1,15 @@
 {% url 'home' as home_url %}
 {% url 'contact' as contact_url %}
-{% url 'about' as about_url %}
+{% url 'services' as services_url %}
 {% url 'products:list' as product_url %}
 {% url 'login' as login_url %}
 {% url 'logout' as logout_url %}
 {% url 'register' as register_url %}
 {%  url 'cart:home' as cart_url %}
-
+{% url  'settings' as settings_url %}
 
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 mx-0">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 mx-auto fixed-top">
 
     {% if logo  %}
         <a href="{{home_url}}"><img style='height: 45px ; width:65px' src="{% static logo %}" /></a>
@@ -39,11 +39,15 @@
       </li>
 
         <li class="nav-item {% if request.path == about_url %}active {% endif %}">
-        <a class="nav-link" href="{{ about_url }}"> About </a>
+        <a class="nav-link" href="{{ services_url }}"> Services </a>
       </li>
 
       <li class="nav-item {% if request.path == product_url %}active {% endif %}">
         <a class="nav-link" href="{{ product_url }}"> Products </a>
+      </li>
+
+        <li class="nav-item {% if request.path == product_url %}active {% endif %}">
+        <a class="nav-link" href="{{ settings_url }}"> Settings </a>
       </li>
 
     {% if request.user.is_authenticated %}
