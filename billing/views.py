@@ -6,17 +6,16 @@ from django.utils.http import is_safe_url
 from django.conf import settings
 import stripe
 
+# stripe api keys
+
 STRIPE_PUB_KEY = getattr(settings, "STRIPE_PUB_KEY", "pk_test_83u7mkT1hPNqTwh5gFewOBeg")
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH')
 stripe.api_key = STRIPE_SECRET_KEY
 
 from .models import BillingProfile, Card
 
+# controller for creating anew payment method
 def payment_method_view(request):
-    #next_url =
-    # if request.user.is_authenticated():
-    #     billing_profile = request.user.billingprofile
-    #     my_customer_id = billing_profile.customer_id
 
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
     print("bP {}".format(billing_profile))
@@ -30,6 +29,7 @@ def payment_method_view(request):
 
 
 
+# ENd point for adding a new stripe card
 
 def payment_method_createview(request):
     if request.method == "POST" and request.is_ajax():

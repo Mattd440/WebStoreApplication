@@ -1,3 +1,6 @@
+
+<!-- Navbar -->
+
 {% url 'home' as home_url %}
 {% url 'contact' as contact_url %}
 {% url 'services' as services_url %}
@@ -15,7 +18,7 @@
         <a href="{{home_url}}"><img style='height: 45px ; width:65px' src="{% static logo %}" /></a>
     {% endif %}
 
-  <a class="navbar-brand ml-4" href="#">
+  <a style="color:yellow ; font-size:22px; font-weight: bold; font-family: 'Courier Times New Roman'" class="navbar-brand ml-4" href="#">
       {% if brandname %}
         {{ brandname }}
       {% else %}
@@ -31,35 +34,35 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active {% if request.path == home_url %}active {% endif %}" >
-        <a class="nav-link" href="{{ home_url }}"> Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ home_url }}"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item {% if request.path == contact_url %}active {% endif %}">
-        <a class="nav-link" href="{{ contact_url }}"> Contact </a>
+        <a class="nav-link" href="{{ contact_url }}"><i class="fa fa-envelope-open"></i> Contact </a>
       </li>
 
         <li class="nav-item {% if request.path == about_url %}active {% endif %}">
-        <a class="nav-link" href="{{ services_url }}"> Services </a>
+        <a class="nav-link" href="{{ services_url }}"><i class="fa fa-wrench"></i> Services </a>
       </li>
 
       <li class="nav-item {% if request.path == product_url %}active {% endif %}">
-        <a class="nav-link" href="{{ product_url }}"> Products </a>
+        <a class="nav-link" href="{{ product_url }}"> <i class="fa fa-laptop"></i> Products </a>
       </li>
 
         <li class="nav-item {% if request.path == product_url %}active {% endif %}">
-        <a class="nav-link" href="{{ settings_url }}"> Settings </a>
+        <a class="nav-link" href="{{ settings_url }}"><i class="fa fa-cogs"></i> Settings </a>
       </li>
 
     {% if request.user.is_authenticated %}
         <li class="nav-item {% if request.path == logout_url_url %}active {% endif %}" >
-            <a class="nav-link" href="{{ logout_url}}"> LogOut </a>
+            <a class="nav-link" href="{{ logout_url}}"><i class="fa fa-sign-out"></i> LogOut </a>
         </li>
     {% else %}
         <li class="nav-item {% if request.path == register_url %}active {% endif %}">
-            <a class="nav-link" href="{{ register_url }}"> Sign Up </a>
+            <a class="nav-link" href="{{ register_url }}"><i class="fa fa-user-plus"></i> Sign Up </a>
         </li>
         <li class="nav-item {% if request.path == login_url %}active {% endif %}">
-            <a class="nav-link" href="{{ login_url }}"> LogIn </a>
+            <a class="nav-link" href="{{ login_url }}"><i class="fa fa-sign-in"></i> LogIn </a>
         </li>
     {% endif %}
 

@@ -2,13 +2,44 @@
     width: 100%;
      height: 300px;
     margin:0;
+    margin-bottom: 20px;
 }
 .carousel img {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   min-width: 100%;
   margin:0;
     height: 300px;
 }
+.wrapper{
+    margin:0;
 
+}
+
+body{
+    /*background-color: darkblue;*/
+    min-height: 1500px;
+    height:100%;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    width:100%;
+    background-color: #333333;
+    color:azure;
+    height:60px;
+    padding:6px;
+    vertical-align: middle;
+    margin-top:40px;
+}
+.content-wrapper{
+    margin-top:25px;
+    margin-bottom: 25px;
+    padding:12px;
+}
+ .featurette{
+     margin-top:12px;
+     padding:12px;
+ }

@@ -7,6 +7,8 @@ from django.contrib.auth import get_user_model
 
 User= get_user_model()
 
+# define method to get or create new cart object
+
 class CartManager(models.Manager):
     def new_or_get(self,request):
         cart_id = request.session.get('cart_id', None)
@@ -31,6 +33,8 @@ class CartManager(models.Manager):
                 current_user = user
         return self.model.objects.create(user=current_user)
 
+# Define Cart Model
+
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
     products = models.ManyToManyField(Product, blank=True)
@@ -43,6 +47,8 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+# define method to execute when cart prices change
 
 def m2mfield_changed_cart_receiver(sender, instance,action, *args, **kwargs):
 
@@ -58,6 +64,8 @@ def m2mfield_changed_cart_receiver(sender, instance,action, *args, **kwargs):
 
 m2m_changed.connect(m2mfield_changed_cart_receiver,sender=Cart.products.through)
 
+
+# method to execute when a cart is gonna be charged
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:

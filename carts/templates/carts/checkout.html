@@ -1,51 +1,57 @@
+<!-- Display Info to Complete checkout -->>
 {% extends 'base.html' %}
 
 {% block content %}
 
+    <!-- Allow User to Login or Enter Email and Continue As Guest -->
+
     {% if not billing_profile %}
-        # Login or Continue as Guest
         <div class="row text-center">
-            <div class="col-12 col-md-6">
-                <p class="lead">Login</p>
+            <div class="col-12 col-md-5 offset-md-1 mb-3">
+                <h1 class="mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Log In <i class="fa fa-sign-in"></i></h1>
                 {% include 'accounts/snippets/loginform.html' with form=form next=request.build_absolute_uri %}
             </div>
 
-            <div class="col-12 col-md-6">
-                Continue as Guest
+            <div class="col-12 col-md-5 mb-5">
+                <h1 class="mt-4 mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Continue As Guest <i class="fa fa-user"></i></h1>
                 {% url 'guest_register' as guest_register_url %}
                  {% include 'accounts/snippets/loginform.html' with form=guest_form next=request.build_absolute_uri actionURL=guest_register_url %}
             </div>
         </div>
     {% else %}
 
+    <!-- If User Is Logged In Get Shipping And Billing Addresses -->
+
+
         {% if not order.shipping_address %}
 
             <div class="row">
                 <div class="col-12">
-                    <p class="lead">Shipping Address</p>
+                    <h1 class="mt-4 mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Shipping Address <i class="fa shipping"></i></h1>
                     <hr>
                 </div>
-                <div class="col-6">
+                <div class="col-10 offset-1 col-md-5 offset-md-1">
                     {% url 'checkout_address_create' as checkout_address_create %}
                     {% include 'addresses/form.html' with form=address_form next=request.build_absolute_uri actionURL=checkout_address_create address_type='shipping' %}
                 </div>
-                <div class="col-6">
+                <div class="col-10 offset-1 col-md-5 offset-md-1">
                     {% url 'checkout_address_reuse' as address_reuse %}
                     {% include 'addresses/previous_addresses.html' with actionURL=address_reuse address_type='shipping' address_query=address_query next=request.build_absolute_uri%}
                 </div>
             </div>
 
          {% elif not order.billing_address %}
+
             <div class="row">
                  <div class="col-12">
-                    <p class="lead">Billing Address</p>
+                     <h1 class="mt-4 mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Billing Address <i class="fa fa-credit-card"></i></h1>
                      <hr>
                  </div>
-                <div class="col-6">
+                <div class="col-10 offset-1 col-md-5 offset-md-1">
                     {% url 'checkout_address_create' as checkout_address_create %}
                      {% include 'addresses/form.html' with form=address_form next=request.build_absolute_uri actionURL=checkout_address_create address_type='billing' %}
                 </div>
-                <div class="col-6">
+                <div class="col-10 offset-1 col-md-5 offset-md-1">
                     {% url 'checkout_address_reuse' as address_reuse %}
                      {% include 'addresses/previous_addresses.html' with actionURL=address_reuse address_type='billing' address_query=address_query next=request.build_absolute_uri%}
                 </div>
@@ -55,6 +61,9 @@
 
 
         {% else %}
+
+            <!-- Display Form to enter credit card info -->
+
             {% if not has_card %}
                     <div class='stripe-payment-form'
                          data-token='{{ publish_key }}'
@@ -65,25 +74,32 @@
 
              {% else %}
 
-                    <h1>Finalize Checkout</h1>
-                    <p>Cart Items :
+            <!-- Display SUmmary of Order -->
+
+                <div  style="margin:40px;">
+                   <h1 class="mt-4 mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Finalize Checkout <i class="fa shipping"></i></h1>
+                    <div class="col-12  col-md-8 offset-md-2">
+
+                    <p><label>Cart Items </label>:
                     {% for product in order.cart.products.all %}
                         {{ product }}
                         {% if not forloop.last %}, {% endif %}
                     {% endfor %}
                     </p>
-                    <p>Shipping Address: {{ order.shipping_address.get_address }}</p>
-                    <p>Billing Address: {{ order.billing_address.get_address }}</p>
-                    <p>Payment Method: {{ billing_profile.default_card }}
+                <p><label>Shipping Address:</label> {{ order.shipping_address.get_address }}</p>
+                    <p><label>Billing Address: </label> {{ order.billing_address.get_address }}</p>
+                    <p><label>Payment Method: </label> {{ billing_profile.default_card }}
                         (<a href="{{ billing_profile.get_payment_method_url }}?next={{ request.build_absolute_uri }}">Change</a>)</p>
-                    <p>Cart Total: ${{ order.cart.total }}</p>
-                    <p>Shipping Total: ${{ order.shipping_total }}</p>
-                    <p>Order Total: ${{ order.total }}</p>
+                    <p><label>Cart Total: </label> ${{ order.cart.total }}</p>
+                    <p><label>Shipping Total: </label> ${{ order.shipping_total }}</p>
+                    <p><label>Order Total: </label> ${{ order.total }}</p>
 
                     <form class="form" method="post" action="">
                         {% csrf_token %}
-                        <button class="btn btn-success">Checkout</button>
+                        <button style="width:60%" class="btn btn-primary">Checkout</button>
                     </form>
+                    </div>
+                </div>
             {% endif %}
         {% endif %}
     {% endif %}

@@ -1,7 +1,7 @@
 from django import forms
 from .models import Address
 
-
+# Define Form Fields for a new address
 class AddressForm(forms.ModelForm):
     class Meta:
         model=Address

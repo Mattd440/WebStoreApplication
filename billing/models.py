@@ -1,97 +1,3 @@
-# from django.db import models
-# from django.conf import settings
-# from django.db.models.signals import post_save, pre_save
-# from accounts.models import GuestEmail
-#
-# import stripe
-# stripe.api_key= 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH'
-#
-#
-# # Create your models here.
-# User = settings.AUTH_USER_MODEL
-#
-# # adds additional functionality to Billing Model
-# class BillingProfileManager(models.Manager):
-#     def new_or_get(self, request):
-#         guest_email_id = request.session.get('guest_email_id')
-#         created = False
-#         user= request.user
-#         billing_profile = None
-#
-#
-#         # Logged In User CheckOut Remembers Payment Info
-#         if user.is_authenticated:
-#             billing_profile, created = self.model.objects.get_or_create(
-#                 user=user, email=user.email)
-#
-#         # Guest Checkout auto reload payment info
-#         elif guest_email_id is not None:
-#             guest_email = GuestEmail.objects.get(id=guest_email_id)
-#             billing_profile, created = self.model.objects.get_or_create(email=guest_email.email)
-#
-#         return billing_profile, created
-#
-# #Billing Model
-# class BillingProfile(models.Model):
-#     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-#     email = models.EmailField()
-#     active = models.BooleanField(default=True)
-#     updated = models.DateTimeField(auto_now=True)
-#     timestamp = models.DateTimeField(auto_now_add=True)
-#     customer_id = models.CharField(max_length=120, null=True, blank=True )
-#
-#     objects = BillingProfileManager()
-#
-#     def __str__(self):
-#         return self.email
-#
-#
-# def billing_profile_created_receiver(sender, instance, *args, **kwargs):
-#     if not instance.customer_id and instance.email:
-#         customer = stripe.Customer.create(
-#             email = instance.email
-#         )
-#         instance.customer_id = customer.id
-# pre_save.connect(billing_profile_created_receiver, sender=BillingProfile)
-#
-#
-# #Create a new billing profile whenever a user is created
-# def user_created_receiver(sender,instance,created, *args, **kwargs):
-#     if created and instance.email:
-#         BillingProfile.objects.get_or_create(user=instance, email=instance.email)
-#
-# post_save.connect(user_created_receiver, sender=User)
-#
-# class CardManager(models.Manager):
-#     def add_new(self, billing_profile, stripe_response):
-#         if str(stripe_response.object) == 'card':
-#             new_card = self.model(
-#                 billing_profile = billing_profile,
-#                 stripe_id = stripe_response.id,
-#                 brand = stripe_response.brand,
-#                 country = stripe_response.country ,
-#                 exp_month = stripe_response.exp_month,
-#                 exp_year = stripe_response.exp_year,
-#                 last4 = stripe_response.last4
-#             )
-#             new_card.save()
-#             return new_card
-#         return None
-#
-#
-# class Card(models.Model):
-#     billing_profile=models.ForeignKey(BillingProfile, on_delete=models.DO_NOTHING)
-#     stripe_id = models.CharField(max_length=120)
-#     brand = models.CharField(max_length=120, null=True, blank=True)
-#     country = models.CharField(max_length=120, null=True, blank=True)
-#     exp_month = models.IntegerField(null=True, blank=True)
-#     exp_year = models.IntegerField(null=True, blank=True)
-#     last4 = models.CharField(max_length=120, null=True, blank=True)
-#     #default = models.BooleanField(default=True)
-#     objects = CardManager()
-#
-#     def __str__(self):
-#         return "{} {}".format(self.brand, self.last4)
 
 from django.conf import settings
 from django.db import models
@@ -103,10 +9,14 @@ User = get_user_model()
 
 
 import stripe
+
+# define stripe api keys
+
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH')
 stripe.api_key = STRIPE_SECRET_KEY
 
 
+# define method to get or create new billing profile
 
 class BillingProfileManager(models.Manager):
     def new_or_get(self, request):
@@ -126,6 +36,10 @@ class BillingProfileManager(models.Manager):
         else:
             pass
         return obj, created
+
+
+# define model for a billing profile
+# define helper methods
 
 class BillingProfile(models.Model):
     user        = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -169,6 +83,8 @@ class BillingProfile(models.Model):
         return cards_qs.filter(active=True).count()
 
 
+# define method to execute when a new billing profile is created
+
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     print(instance)
     if not instance.customer_id :
@@ -181,7 +97,7 @@ def billing_profile_created_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(billing_profile_created_receiver, sender=BillingProfile)
 
-
+# define method to execute and create a new billing profile when a user is created
 def user_created_receiver(sender, instance, created, *args, **kwargs):
     print(instance)
     if created :
@@ -189,6 +105,8 @@ def user_created_receiver(sender, instance, created, *args, **kwargs):
 
 post_save.connect(user_created_receiver, sender=User)
 
+
+# define method to create a new credit card object
 
 class CardManager(models.Manager):
     def add_new(self, billing_profile, token):
@@ -208,6 +126,7 @@ class CardManager(models.Manager):
             return new_card
         return None
 
+# Define Credit Card Model
 
 class Card(models.Model):
     billing_profile         = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
@@ -225,6 +144,8 @@ class Card(models.Model):
     def __str__(self):
         return "{} {}".format(self.brand, self.last4)
 
+# Define Method to Execute when a credit card is created
+
 def new_card_post_save_receiver(sender, instance, created, *args, **kwargs):
     if instance.default:
         billing_profile = instance.billing_profile
@@ -233,6 +154,8 @@ def new_card_post_save_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(new_card_post_save_receiver, sender=Card)
+
+# define method to create a new charge
 
 class ChargeManager(models.Manager):
     def do(self, billing_profile, order_obj, card=None): # Charge.objects.do()
@@ -263,6 +186,7 @@ class ChargeManager(models.Manager):
         new_charge_obj.save()
         return new_charge_obj.paid, new_charge_obj.seller_message
 
+# credit card charge model
 
 class Charge(models.Model):
     billing_profile         = models.ForeignKey(BillingProfile, on_delete=models.DO_NOTHING)

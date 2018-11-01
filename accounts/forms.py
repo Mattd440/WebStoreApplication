@@ -3,17 +3,18 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
+# Defines Form Fields to sign in a guest user
 class GuestForm(forms.Form):
     email    = forms.EmailField()
 
-
+# Defines Form Fields to login a user
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-
+# Defines Form Fields To register a new user
+# Defines restrictions on input fields
 class RegisterForm(forms.Form):
     username = forms.CharField()
     email    = forms.EmailField()

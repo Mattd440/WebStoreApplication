@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from .utils import Mailchimp
 
 
+# define email marketing model
 class MailingPreference(models.Model):
     user                        = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     subscribed                  = models.BooleanField(default=True)
@@ -18,6 +19,8 @@ class MailingPreference(models.Model):
 
 
 
+##### method to execute when a mailing object is created #########
+
 
 def mailing_pref_create_receiver(sender, instance, created, *args, **kwargs):
     if created:
@@ -26,6 +29,9 @@ def mailing_pref_create_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(mailing_pref_create_receiver, sender=MailingPreference)
+
+
+# method to execute when mailing settings are changed
 
 def mailing_pref_update_receiver(sender, instance, *args, **kwargs):
     if instance.subscribed != instance.mailchimp_subscribed:

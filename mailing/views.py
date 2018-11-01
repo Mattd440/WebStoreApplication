@@ -10,9 +10,10 @@ from .mixins import CsrfExemptMixin
 from .models import MailingPreference
 from .utils import Mailchimp
 
+# get mail chimp email list id
 MAILCHIMP_EMAIL_LIST_ID = getattr(settings, "MAILCHIMP_EMAIL_LIST_ID", None)
 
-
+# controlled to update mailing settings
 class MailingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
     form_class = MailingPreferenceForm
     template_name = 'base/forms.html'  # yeah create this

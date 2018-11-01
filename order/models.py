@@ -7,15 +7,20 @@ from WebApplication.utils import unique_order_id_generator
 from django.db.models.signals import pre_save, post_save
 from addresses.models import Address
 
+# map status names
 ORDER_STATUS = (
     ('created', 'Created'),
     ('paid', 'Paid'),
     ('shipped', 'Shipped'),
     ('refunded', 'Refunded')
 )
+
+# method to get or create new order
+
 class OrderManager(models.Manager):
     def new_or_get(self, billing_profile, cart):
         created = False
+        # check if order exists
         query = self.get_queryset().filter(
             billing_profile=billing_profile,
             cart=cart, active=True, status='created')
@@ -23,12 +28,14 @@ class OrderManager(models.Manager):
         if query.count() == 1:
             order = query.first()
         else:
+            # create new order if one doesnt exists
             order = self.model.objects.create(
                 billing_profile=billing_profile,
                 cart=cart)
             created = True
         return order, created
 
+# Order Model
 
 class Order(models.Model):
     billing_profile     = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, null=True, blank=True)
@@ -47,6 +54,8 @@ class Order(models.Model):
     def __str__(self):
         return self.order_id
 
+    # update total when product is added
+
     def update_total(self):
         cart_total = self.cart.total
         shipping_total = self.shipping_total
@@ -56,6 +65,8 @@ class Order(models.Model):
         self.save()
 
         return new_total
+
+    # determine if checkout is complete
 
     def checkout_done(self):
         billing_profile = self.billing_profile
@@ -68,12 +79,15 @@ class Order(models.Model):
 
         return False
 
+    # change status to paid
+
     def mark_paid(self):
         if self.checkout_done():
             self.status = 'paid'
             self.save()
         return self.status
 
+# method to execute when order is created generate a unique id
 
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
@@ -82,6 +96,9 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if query.exists():
         query.update(active=False)
 pre_save.connect(pre_save_create_order_id, sender=Order)
+
+
+# method to update cart total  when cart is updated
 
 def post_save_cart_total(sender, instance,created, *args, **kwargs):
     if not created:
@@ -95,6 +112,8 @@ def post_save_cart_total(sender, instance,created, *args, **kwargs):
             order.update_total()
 
 post_save.connect(post_save_cart_total, sender=Cart)
+
+# update cart total
 
 def post_save_order(sender, instance, created, *args, **kwargs):
     if created:

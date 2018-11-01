@@ -4,7 +4,8 @@ from WebApplication.utils import unique_slug_generator
 from products.models import Product
 
 
-# Create your models here.
+# product search tag model
+
 class ProductTag(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField()
@@ -16,6 +17,7 @@ class ProductTag(models.Model):
     def __str__(self):
         return self.title
 
+# add product slug tag
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:

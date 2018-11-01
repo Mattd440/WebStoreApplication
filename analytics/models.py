@@ -21,6 +21,7 @@ FORCE_SESSION_TO_ONE = getattr(settings, 'FORCE_SESSION_TO_ONE', False)
 FORCE_INACTIVE_USER_ENDSESSION = getattr(settings, 'FORCE_INACTIVE_USER_ENDSESSION', False)
 
 
+# define analytic model for when an product is viewed
 class ObjectViewed(models.Model):
     user            = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING)
     content_type    = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
@@ -37,6 +38,7 @@ class ObjectViewed(models.Model):
         verbose_name = 'Object Viewed'
         verbose_name_plural = 'Objects Viewed'
 
+# method to execute when an product is viewed
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
     ip_address = None
@@ -51,9 +53,10 @@ def object_viewed_receiver(sender, instance, request, *args, **kwargs):
                 object_id=instance.id,
                 ip_address=ip_address
                 )
-
+# define signal for product view
 object_viewed_signal.connect(object_viewed_receiver)
 
+#  User session creation analytical model
 class UserSession(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING)
     ip_address = models.CharField(max_length=255, blank=True, null=True)
@@ -74,6 +77,7 @@ class UserSession(models.Model):
             pass
         return self.ended
 
+#  method to execute when a user logs in
 def post_save_session_receiver(sender, instance, created, *args, **kwargs):
     if created:
         query = UserSession.objects.filter(user=instance.user, ended=False, active=False).exclude(id=instance.id)
@@ -84,6 +88,7 @@ def post_save_session_receiver(sender, instance, created, *args, **kwargs):
 if FORCE_SESSION_TO_ONE:
     post_save.connect(post_save_session_receiver, sender=UserSession)
 
+# method to execute when a user session object changes
 def post_save_user_changed_receiver(sender, instance, created, *args, **kwargs):
     if not created:
         if instance.is_active == False:
@@ -94,6 +99,7 @@ def post_save_user_changed_receiver(sender, instance, created, *args, **kwargs):
 if FORCE_INACTIVE_USER_ENDSESSION:
     post_save.connect(post_save_user_changed_receiver, sender=User)
 
+# method to execute whena user logs in
 def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
     user = instance
     ip_address = None
@@ -112,6 +118,7 @@ def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
 
 user_logged_in.connect(user_logged_in_receiver)
 
+# get users ip address
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:

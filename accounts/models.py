@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 # Create your models here.
 
-
+# Model For a Guest User  Normal User Model is Built In
 class GuestEmail(models.Model):
     email       = models.EmailField()
     active      = models.BooleanField(default=True)

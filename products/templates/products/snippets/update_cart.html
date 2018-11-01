@@ -1,4 +1,6 @@
- <form style="display:inline"  class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
+ <!-- Display buttons to add or remove product from cart  -->
+
+<form style="display:inline"  class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
     {% csrf_token %}
 
     <input type="hidden" name="product" value="{{ product.id }}">

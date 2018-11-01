@@ -1,9 +1,11 @@
+<!--  Display form to log in User  -->
+
 
     <form method="post" action="{% if actionURL %}{{ actionURL }}{% else %}{% url 'login' %}{% endif %}">
         {% csrf_token %}
         {% if next %}
         <input type="hidden" name="next" value="{{ next_url }}" />
         {% endif %}
-        {{ form }}
-        <input type="submit" class="btn btn-primary" value="Submit">
+        {{ form.as_p }}
+        <input style="width:50%" type="submit" class="btn btn-primary" value="Submit">
     </form>

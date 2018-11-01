@@ -12,10 +12,14 @@ from django.conf import settings
 
 import stripe
 
+# Stripe api keys
+
 STRIPE_PUB_KEY = getattr(settings, "STRIPE_PUB_KEY", "pk_test_83u7mkT1hPNqTwh5gFewOBeg")
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", 'sk_test_R0KbGRdJEaj1yH0j0gZB62JH')
 stripe.api_key = STRIPE_SECRET_KEY
 publish_key = STRIPE_PUB_KEY
+
+# controller to return cart data
 
 def cart_detail_api_view(request):
     cart, newcart = Cart.objects.new_or_get(request)
@@ -29,10 +33,13 @@ def cart_detail_api_view(request):
     cart = {'products':productData, 'subtotal':cart.subtotal, 'total':cart.total}
     return JsonResponse(cart)
 
+# controller for main cart page returns cart object
 
 def cart_home(request):
     cart, newcart = Cart.objects.new_or_get(request)
     return render(request, 'carts/home.html', {'cart': cart})
+
+# controller to execute when a cart is updated
 
 def cart_update(request):
     prod_id = request.POST.get('product')
@@ -65,31 +72,43 @@ def cart_update(request):
 
     return redirect('cart:home')
 
+# controller to complete checkout process
+
 def checkout(request):
+    # get card object
     cart, new_cart = Cart.objects.new_or_get(request)
     order = None
+
+    # redirect if cart not present or no products in cart
+
     if new_cart or cart.products.count() == 0:
         return redirect('cart:home')
 
+    # get form object
     login_form = LoginForm()
     guest_form = GuestForm()
     address_form = AddressForm()
 
+    # get address ids
     billing_address_id  = request.session.get('billing_address_id', None)
     shipping_address_id = request.session.get('shipping_address_id', None)
 
+    # get billing profile
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
-    #print("profile {}".format(billing_profile))
+
     address_query = None
     has_card = False
 
-
+    # check if profile exists
     if billing_profile is not None:
+        # check if user is signed in
         if request.user.is_authenticated:
             address_query = Address.objects.filter(billing_profile=billing_profile)
 
-        order, order_created = Order.objects.new_or_get(billing_profile=billing_profile,
-                                         cart=cart)
+        # get order object
+        order, order_created = Order.objects.new_or_get(billing_profile=billing_profile,  cart=cart)
+
+        # set orders shipping and billing addresses and save order
         if shipping_address_id:
             order.shipping_address = Address.objects.get(id=shipping_address_id)
             del request.session['shipping_address_id']
@@ -99,8 +118,10 @@ def checkout(request):
         if shipping_address_id or billing_address_id:
             order.save()
 
+        # check if user has a saved card
         has_card = billing_profile.has_card
 
+        # do if method is post
         if request.method == 'POST' :
             is_done = order.checkout_done()
             if is_done:
@@ -128,9 +149,8 @@ def checkout(request):
 
     return render(request, 'carts/checkout.html', context)
 
-def checkout_done(request):
-    # print(request.session.get('cart_items'))
-    # request.session['cart_items'] = 0
-    # print(request.session.get('cart_items'))
 
+# controller for thank you page
+
+def checkout_done(request):
     return render(request, 'carts/checkout_done.html')

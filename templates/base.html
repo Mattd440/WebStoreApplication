@@ -1,3 +1,6 @@
+<!-- Base template for all pages -->
+
+
 {% load static %}
 {% url 'products:list' as product_url %}
 <!doctype html>
@@ -5,7 +8,16 @@
       <head>
         <!-- Required meta tags -->
        {% include 'base/css.html' %}
-          {% block base_head %}{% endblock %}
+          {% block base_head %}
+              <style>
+    input[type='text']{
+        float:right;
+    }
+label{
+    font-weight: bold;
+}
+</style>
+          {% endblock %}
 
         <title>Rocket Tech</title>
       </head>

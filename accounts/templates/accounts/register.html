@@ -1,12 +1,19 @@
+<!-- Display form to sign up a new user  -->
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Register</h1>
-    <div class="row">
-        <form method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" class="btn btn-primary" value="Submit">
-        </form>
+    <div style="margin:20px;">
+        <h1 class="mb-4" style="color:#447e9b; text-decoration-line: underline;font-size: 42px; text-align: center;">Register
+            <i class="fa fa-user-plus"></i>
+        </h1>
+        <div class="row" style="margin-left:50px;margin-bottom:50px;">
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                <input style="width:100%" type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>
     </div>
 {% endblock %}

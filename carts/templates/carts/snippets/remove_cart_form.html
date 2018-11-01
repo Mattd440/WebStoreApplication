@@ -1,4 +1,6 @@
- <form class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
+<!-- Form to Remove aproduct from the cart -->
+
+<form class='product-add-form' data-endpoint='{% url "cart:update"%}' method="post" action="{% url 'cart:update' %}" class="form">
     {% csrf_token %}
 
     <input class="cart-item-product-id" type="hidden" name="product" value="{{ product_id }}">
