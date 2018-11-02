@@ -18,7 +18,7 @@
 }
 
 body{
-    /*background-color: darkblue;*/
+    background-color: white;
     min-height: 1500px;
     height:100%;
 }
@@ -27,7 +27,8 @@ body{
     position: fixed;
     bottom: 0;
     width:100%;
-    background-color: #333333;
+    /*background-color: #333333;*/
+    background-color: yellow;
     color:azure;
     height:60px;
     padding:6px;
@@ -43,3 +44,4 @@ body{
      margin-top:12px;
      padding:12px;
  }
+

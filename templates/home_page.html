@@ -3,15 +3,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block base_head %}
-<link rel="stylesheet" href="{% static 'css/basestyles.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">#}
+
 {% endblock %}
 
 {% block content %}
 
             <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <h2 class="featurette-heading text-muted" style="text-align: right" >Located Near Campus </h2>
+            <p class="lead" style="clear: both;">
+                Located minutes from the University of Toledo Campus we proudly offer discounted rates to students.
+                We are here to offer affordable electronic solulutions to the student and local community.
+            </p>
           </div>
           <div class="col-md-5">
             <img class="featurette-image img-fluid mx-auto"   style="width: 500px; height: 400px;" src="{% static 'img/toledo.jpg' %}" data-holder-rendered="true">
@@ -22,8 +26,12 @@
 
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <h2 class="featurette-heading text-muted" style="text-align: left">Friendly Sales and Service</h2>
+            <p class="lead" style="clear: both;">
+                Are friendly and knowledgable sales staff is here to answer your questions and concerns.
+                We are here to help you get your new laptop, tablet or printer up and running and instruct
+                you on how to effectively use it.
+            </p>
           </div>
           <div class="col-md-5 order-md-1">
             <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 400px;" src="{% static 'img/salesman.jpeg' %}">
@@ -34,8 +42,12 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <h2 class="featurette-heading text-muted" style="text-align: center">100% Guaranteed Service </h2>
+            <p class="lead">
+                Our technicians are certified to service the products we sell and we stand behind all repairs.
+                We offer a wide range of service from hard drive replacement to virus removal, so if your computer
+                is not performing well allow us to get it back up to speed.
+            </p>
           </div>
           <div class="col-md-5">
             <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 400px;" src="{% static 'img/services2.jpeg' %}">
