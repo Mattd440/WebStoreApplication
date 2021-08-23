@@ -85,7 +85,7 @@ jupyter-core==4.4.0
 jupyter==1.0.0
 jupyterlab-launcher==0.13.1
 jupyterlab-server==0.2.0
-jupyterlab==0.35.3
+jupyterlab==1.2.21
 keras-applications==1.0.6
 keras-eval==0.0.43
 keras-model-specs==0.0.30
